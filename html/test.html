@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>云API</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/my.css" />
+
+    <style type="text/css">
+        .aui-searchbar {
+            background: transparent;
+        }
+
+        .aui-bar-nav .aui-searchbar-input {
+            background-color: #ffffff;
+        }
+
+        .aui-card-list {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="aui-header">
+        <a id="loginout" class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+            <span class="aui-iconfont aui-icon-left"></span>
+        </a>
+        <a class="aui-btn aui-pull-right" tapmode onclick="funOpenArticle(this)">
+            <span class="aui-iconfont aui-icon-right"></span>
+        </a>
+        <div class="aui-title">主菜单</div>
+    </header>
+    <section class="aui-content aui-padded-l-5 aui-padded-r-10 aui-padded-t-5">
+        <div class="aui-row aui-row-padded">
+            <div class="aui-col-xs-4">
+                <div class="aui-card-list" tapmode onclick="funOpenArticle(this)">
+                    <div class="aui-card-list-content">
+                        <img src="../image/logo/scrk.png">
+                    </div>
+                    <div class="aui-card-list-header aui-font-size-12">生产入库</div>
+                </div>
+            </div>
+            <div class="aui-col-xs-4">
+                <div class="aui-card-list" tapmode onclick="funOpenArticle(this)">
+                    <div class="aui-card-list-content">
+                        <img src="../image/logo/xsfh.png">
+                    </div>
+                    <div class="aui-card-list-header aui-font-size-12">销售发货</div>
+                </div>
+            </div>
+            <div class="aui-col-xs-4">
+                <div class="aui-card-list" tapmode onclick="funOpenArticle(this)">
+                    <div class="aui-card-list-content">
+                        <img src="../image/logo/qtrk.png">
+                    </div>
+                    <div class="aui-card-list-header aui-font-size-12">其他入库</div>
+                </div>
+            </div>
+            <div class="aui-col-xs-4">
+                <div class="aui-card-list" tapmode onclick="funOpenArticle(this)">
+                    <div class="aui-card-list-content">
+                        <img src="../image/logo/qtck.png">
+                    </div>
+                    <div class="aui-card-list-header aui-font-size-12">其他出库</div>
+                </div>
+            </div>
+            <div class="aui-col-xs-4">
+                <div class="aui-card-list" tapmode onclick="funOpenArticle(this)">
+                    <div class="aui-card-list-content">
+                        <img src="../image/logo/ckdb.png">
+                    </div>
+                    <div class="aui-card-list-header aui-font-size-12">仓库调拨</div>
+                </div>
+            </div>
+            <div class="aui-col-xs-4">
+                <div class="aui-card-list" tapmode onclick="gotoAui()">
+                    <div class="aui-card-list-content">
+                        <img src="../image/demo1.png">
+                    </div>
+                    <div class="aui-card-list-header aui-font-size-12">工具</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/aui-toast.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            api.parseTapmode();
+            var header = $api.byId('aui-header');
+            $api.fixStatusBar(header);
+            var headerPos = $api.offset(header);
+            var body_h = $api.offset($api.dom('body')).h;
+            var username = $api.getStorage('username');
+
+
+            api.addEventListener({
+                name: 'goto'
+            }, function(ret, err) {
+                api.alert({
+                    msg: ('错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode)
+                });
+            });
+
+            api.addEventListener({
+                name: 'funOpenArticle'
+            }, function(ret, err) {
+                if (ret) {
+                    alert(JSON.stringify(ret));
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+
+        };
+
+        function goto(name) {
+            window.location.href = name + '.html';
+        }
+
+        function gotoAui() {
+            window.location.href = '../aui2/index.html';
+        }
+        /*function loginout() {
+          document.getElementById("loginout").addEventListener("click", function()
+          {
+            $api.clearStorage(); // 清除登录数据
+            var toast = new auiToast();
+            toast.success({
+                title: "退出成功",
+                duration: 2000
+            });
+            api.sendEvent({
+                name: 'loginout',
+                extra: {
+                    msg: '登出成功'
+                }
+            });
+            setTimeout("api.closeWin({})", 2000);
+          });
+
+        }*/
+        function closeWin() {
+            $api.clearStorage(); // 清除登录数据
+            var toast = new auiToast();
+            toast.success({
+                title: "退出成功",
+                duration: 2000
+            });
+            api.sendEvent({
+                name: 'loginout',
+                extra: {
+                    msg: '登出成功'
+                }
+            });
+            setTimeout("api.closeWin({})", 2000);
+        }
+
+        function funOpenArticle(tag) {
+            var title = $api.text(tag.querySelector('.aui-card-list-header'));
+            var username = $api.getStorage('username');
+
+            api.openWin({
+                name: 'frame2',
+                url: './frame2.html',
+                pageParam: {
+                    title: title,
+                    uname: username,
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

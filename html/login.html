@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>登录界面</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js">
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+        .aui-content {
+            margin: 0 auto;
+        }
+
+        .logopos {
+            padding-top: 5rem;
+        }
+
+        img#yh {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+    <style type="text/css">
+        img.icon {
+            display: block;
+            margin: 0 auto;
+            width: 60%;
+        }
+
+        .aui-grid-label {
+            padding-top: 0.5rem;
+            font-size: 0.7rem !important;
+        }
+
+        .title {
+            color: #666;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .title p {
+            font-size: 0.8rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content">
+        <div class="aui-card-list">
+            <div class="logopos">
+                <img id="yh" src="../image/logo/yhzd.png">
+            </div>
+            <div class="aui-card-list-header">
+                <div></div>
+                <div class="title">
+                    /&nbsp;&nbsp;MOMES&nbsp;&nbsp;/
+                    <p>Recommend</p>
+                </div>
+                <div></div>
+
+            </div>
+            <div class="aui-card-list-content-padded">
+                <div class="aui-row aui-row-padded">
+                    <div class="input-group input-group-md">
+                        <span class="input-group-addon" id="sizing-addon1"><i
+                   class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                 </span>
+                        <input id="userName" type="text" class="form-control" placeholder="用户名" aria-describedby="sizing-addon1" />
+                    </div>
+                    <br />
+                    <div class="input-group input-group-md">
+                        <span class="input-group-addon" id="sizing-addon1"><i
+                   class="glyphicon glyphicon-lock"></i></span> <input type="password" id="password" class="form-control" placeholder="密码" aria-describedby="sizing-addon1" />
+                    </div>
+                    <br />
+                    <p>
+                        <div class="aui-btn aui-btn-block" onclick="login()" style="background-color: #5b6be8;
+          border-color: #5b6be8;">登录</div>
+                    </p>
+                    <br>
+                    <!--<p>
+                        <div class="aui-btn aui-btn-primary aui-btn-block" onclick="showPersonInfo()">默认按钮(primary)</div>
+                    </p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function login() {
+            var username = document.getElementById("userName");
+            var pass = document.getElementById("password");
+
+            if (username.value == "") {
+
+                alert("请输入用户名");
+
+            } else if (pass.value == "") {
+
+                alert("请输入密码");
+
+            } else if (username.value == "admin" && pass.value == "123456") {
+
+                window.location.href = "test.html";
+
+            } else {
+                //alert(pass.value);
+                api.ajax({
+                    url: 'http://yuanhui.free.idcfengye.com/login.php', //如果地址访问不到会请求出错，请填写自己的接口地址
+                    method: 'post',
+                    timeout: 30,
+                    dataType: JSON,
+                    returnAll: false,
+                    data: {
+                        values: {
+                            username: username.value,
+                            password: pass.value
+                        }
+                    }
+                }, function(ret, err) {
+                    api.hideProgress();
+                    //alert(JSON.stringify(ret));
+                    if (ret) {
+                        if (ret.status == 0) {
+                            api.alert({
+                                msg: ret.msg
+                            });
+                            return;
+                        }
+                        var urlJson = JSON.stringify(ret);
+
+                        var obj = eval(urlJson);
+
+                        var uid = obj[0]['uid'];
+                        var uname = obj[0]['USER_NAME_'];
+                        //alert(uid);
+                        $api.setStorage('username', uname);
+                        $api.setStorage('uid', uid);
+                        //alert('登录成功');
+                        window.location.href = "test.html";
+                    } else {
+                        alert("请输入正确的用户名和密码！");
+                    }
+                });
+            }
+        }
+
+        function showPersonInfo() {
+            console.log('1');
+            api.showProgress(); //显示加载进度框
+            //使用api.ajax请求数据，具体使用方法和参数请看官方文档，这里使用get方法演示
+            var arr = [];
+            api.ajax({
+                url: 'http://yuanhui.free.idcfengye.com/new.php', //如果地址访问不到会请求出错，请填写自己的接口地址
+                method: 'get',
+                cache: 'false',
+                timeout: 30,
+                dataType: JSON,
+            }, function(ret, err) {
+                api.hideProgress(); //隐藏加载进度框
+                console.log(typeof ret);
+                //var jret=JSON.stringify(ret);
+                //console.log(typeof jret);
+                if (ret) {
+                    //alert(ret);
+                    for (var i = 0; i < ret.length; i++) {
+                        var html = '<br>' + 'ID：' + ret[i].id + '<br>' + '姓名：' + ret[i].username + '<br>' + '密码:' + ret[i].password + '<br>' + '编码' + ret[i].code;
+                        document.write(html);
+                    }
+                } else {
+                    api.alert({
+                        msg: ('错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode)
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

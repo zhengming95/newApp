@@ -1,0 +1,33 @@
+
+/*分页*/
+.page a:hover {
+  background: none repeat scroll 0 0 #EBEBEB;
+}
+.page .n {
+  font-family: "宋体";
+  line-height: 24px;
+  overflow: hidden;
+  width: 70px;
+}
+.page {
+  width: 710px;
+  white-space: nowrap;
+}
+.page a, .page strong {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 1px solid #E7ECF0;
+  display: inline-block;
+  font-size: 14px;
+  height: 22px;
+  line-height: 22px;
+  margin-right: 5px;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  width: 23px;
+}
+.page strong {
+  border: 0 none;
+}
+
+

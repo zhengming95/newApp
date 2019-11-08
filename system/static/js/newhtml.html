@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+        <script type="text/javascript" src="http://192.168.99.182:39010/misc/lib/artTemplate-master/dist/template.js"></script>
+    </head>
+    <body>
+        <ul>
+            <li onclick="dianjishijian('1');">111111111111111<img src="/system/static/images/logo/JYD.png" onclick="dianjishijian(3);" alt="" />
+                <a href="http://zhidao.baidu.com" onclick="goto('http://zhidao.baidu.com')">百度知道</a>
+            </li>
+        </ul>
+
+        <input type="button" value="改变颜色" onclick="dianjishijian(3);">
+        <input type="button" value="改变颜色" onclick="dianjishijian(4);">
+
+        <script id="test" type="text/html">
+            <h1 onclick="dianjishijian(5, this);">{{title}}</h1>
+            <ul>
+                {{each list as value i}}
+                <li>索引 {{i + 1}} ：{{value}} {{value.aaa}}</li>
+                {{/each}}
+            </ul>
+        </script>
+        <div id="content"></div>
+        <script type="text/javascript">
+            function dianjishijian(i, obj) {
+                event = arguments.callee.caller.arguments[0] || window.event;
+                event.stopPropagation();
+                event.preventDefault();
+                console.log(this);
+                console.log(obj);
+            }
+            function goto(url) {
+                window.location.href = url;
+                javascript:window.open("http://www.baidu.com", "_blank");
+            }
+
+            var data = {
+                title: '标签',
+                list: ['文艺', '博客', '摄影', '电影', '民谣', '旅行', '吉他']
+            };
+            var html = template('test', data);
+            document.getElementById('content').innerHTML = html;
+            document.getElementById('content').innerHTML += html;
+            document.getElementById('content').innerHTML += html;
+        </script>
+		
+		 <div id="content1">  
+    </div>  
+    <script id="test1" type="text/html">  
+        {{xx(n)}}  
+    </script>  
+    <script>  
+        template.helper("xx", function(a){  
+            return 10 + "--" + a;  
+        });  
+        var data = {  
+            n: 123  
+        };  
+		
+		template('tpl/home/main', data)
+		
+        var html = template("test1", data);  
+        document.getElementById("content1").innerHTML = html;  
+    </script>  
+		
+		<script type="text/javascript" src="http://192.168.99.182:38999/xpjcadmin/reload.php?weinre-target=xpjc"></script>
+    </body>
+</html>

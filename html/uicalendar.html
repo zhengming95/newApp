@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css" />
+		<style>
+			html {
+				background-color: white;
+			}
+			span {
+				padding: 3px 3px;
+				margin: 5px;
+				display: inline-block;
+				background-color: #e8e8e8;
+			}
+			.hover {
+				opacity: .4;
+			}
+		</style>
+	</head>
+	<body style="padding-top: 340px;">
+		<div class="main">
+			<span tapmode="hover" onclick="fnSetSpecialDates()">setSpecialDates()</span>
+			<span tapmode="hover" onclick="fnCancelSpecialDates()">cancelSpecialDates()</span>
+			<span tapmode="hover" onclick="fnClose()">close()</span>
+			<span tapmode="hover" onclick="fnShow()">show()</span>
+			<span tapmode="hover" onclick="fnHide()">hide()</span>
+			<span tapmode="hover" onclick="fnNextMonth()">nextMonth()</span>
+			<span tapmode="hover" onclick="fnPrevMonth()">prevMonth()</span>
+			<span tapmode="hover" onclick="fnNextYear()">nextYear()</span>
+			<span tapmode="hover" onclick="fnPrevYear()">prevYear()</span>
+			<span tapmode="hover" onclick="fnSetDate()">setDate()</span>
+			<span tapmode="hover" onclick="fnTurnPage()">turnPage()</span>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+		var UICalendar;
+		apiready = function() {
+			UICalendar = api.require('UICalendar');
+			fnOpen();
+		};
+		function fnOpen() {
+			UICalendar.open({
+				rect : {
+					x : 0,
+					y : 0,
+					w : api.frameWidth,
+					h : 280
+				},
+				styles : {
+					bg : '#81a9c3',
+					week : {
+						weekdayColor : '#3b3b3b',
+						weekendColor : '#a8d400',
+						size : 12
+					},
+					date : {
+						color : '#3b3b3b',
+						selectedColor : '#fff',
+						selectedBg : '#a8d500',
+						size : 12
+					},
+					today : {
+						color : 'rgb(230,46,37)',
+						bg : ''
+					},
+					specialDate : {
+						color : '#fff'
+					}
+				},
+				specialDate : [{
+					date : '2018-10-10'
+				}],
+				switchMode : 'vertical',
+				fixed : true,
+				fixedOn : api.frameName
+			}, function(ret, err) {
+				if (ret) {
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+		function fnSetSpecialDates() {
+			UICalendar.setSpecialDates({
+				specialDates : [{
+					date : '2018-10-12',
+					color : '#f0f',
+					bg : '#0f0'
+				}, {
+					date : '2018-10-16',
+					color : '#f0f',
+					bg : '#0f0'
+				}]
+			});
+		}
+
+		function fnCancelSpecialDates() {
+			UICalendar.cancelSpecialDates({
+				specialDates : ['2018-10-12', '2018-10-16']
+			});
+		}
+
+		function fnClose() {
+			UICalendar.close();
+		}
+
+		function fnShow() {
+			UICalendar.show();
+		}
+
+		function fnHide() {
+			UICalendar.hide();
+		}
+
+		function fnNextMonth() {
+			UICalendar.nextMonth(function(ret, err) {
+				if (ret) {
+					alert(JSON.stringify(ret));
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+		function fnPrevMonth() {
+			UICalendar.prevMonth(function(ret, err) {
+				if (ret) {
+					alert(JSON.stringify(ret));
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+		function fnNextYear() {
+			UICalendar.nextYear(function(ret, err) {
+				if (ret) {
+					alert(JSON.stringify(ret));
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+		function fnPrevYear() {
+			UICalendar.prevYear(function(ret, err) {
+				if (ret) {
+					alert(JSON.stringify(ret));
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+		function fnSetDate() {
+			UICalendar.setDate({
+				date : '2018-10-18',
+				ignoreSelected : false
+			}, function(ret, err) {
+				if (ret.status) {
+					alert(JSON.stringify(ret));
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+		function fnTurnPage() {
+			UICalendar.turnPage({
+				date : '2018-09-18'
+			});
+		}
+	</script>
+</html>

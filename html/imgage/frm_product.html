@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,maximum-scale=1, user-scalable=no">
+        <meta name="MobileOptimized" content="320"/>
+        <meta name="format-detection" content="telephone=no">
+        <link href="style.css" type="text/css" rel="stylesheet">
+        <script type="text/javascript" src="load.js"></script>      
+        <style type="text/css">     
+
+                    
+        </style>
+        <script type="text/javascript">
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
+
+    </head>
+    <body>
+        <style type="text/css"> 
+            .reload_xpjc_button{
+                position: absolute;
+                width: 60px;
+                height: 60px; 
+                z-index: 5000;
+                background: #90be44;
+                left: 60px;
+                top:350px;
+
+            }
+            .href_xpjc_button{
+                position: absolute;
+                width: 60px;
+                height: 60px; 
+                z-index: 5000;
+                background: #cdcdcd;
+                left: 120px;
+                top:350px;
+
+            }
+        </style>
+         <div id="wrap">
+    <div id="container" class="wrap"> 
+        <div class="container content scrollpage" morelink="app/list">
+            <ul>
+
+            </ul>
+            <div class="searchstate" page="1" cate="-1" text="" over="0">
+    <div class="loading">
+        正在加载中……
+    </div>
+    <div class="emptydata">
+        没有了 :)
+    </div>
+</div>
+<style type="text/css">
+    .searchstate{
+        text-align: center;
+        margin: 10px auto;
+    }
+    .searchstate>div{
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    function initsearchstate() {
+        $obj = $(".searchstate");
+        $obj.attr("page", 1);
+        $obj.attr("cate", -1);
+        $obj.attr("text", "");
+        $obj.attr("over", "0"); //是否已经结束
+    }
+    function showloading() {
+        $(".searchstate >div ").hide();
+        $(".searchstate >div.loading ").show();
+    }
+    function showempty() {
+        $(".searchstate >div ").hide();
+        $(".searchstate >div.emptydata ").show();
+    }
+    function searchattr(key, value) {
+        $obj = $(".searchstate");
+        if (typeof (value) != "undefined") {
+            $obj.attr(key, value);
+            if (key == "over" && value == 1) {
+                showempty();
+            }
+        } else {
+            return  $obj.attr(key);
+        }
+    }
+    /**
+     * 返回搜索的数据
+     * @returns {String}
+     */
+    function searchAttrAll() {
+        var allattr = $(".searchstate").get(0).attributes;
+        var search = "";
+        for (i = 0; i < allattr.length; i++) {
+            o = allattr.item(i);
+            if (o.nodeName != 'class') {
+                search += "search[" + o.nodeName + "]=" + encodeURIComponent(o.nodeValue) + "&";
+            }
+        }
+        return search;
+    }
+</script>        </div>
+    </div>
+</div>
+
+<script id="newslist" type="text/x-jquery-tmpl">
+    {{each data}}
+
+    <li cate="cate1"  post_id="{{= $value.post_id}}">
+    <div class="prdimg">                                
+    <img  class="lazy" data-original="{{= $value.post_image}}"  src="imgage/load.gif" alt="" />
+    </div>
+    <div class="prdtitle">
+    {{= $value.post_title}}
+    </div>
+    </li>   
+    {{/each}}
+</script>
+<style type="text/css">
+    .content{
+        font-size: 16px;
+        padding-left:  10px;
+        padding-right:  10px;
+        line-height: 2;
+    }
+    .prdimg{
+        border: 3px #cdcdcd solid;
+        border-radius: 5px;
+        padding: 0px;
+        background: #cdcdcd;
+    }
+    .prdimg img{
+        width: 100%;
+        display: block;
+        border-radius: 5px;
+    }
+    ul li {
+        padding: 0px;
+
+    }
+    .prdtitle{
+        text-align: center;    
+        margin-bottom: 10px;
+    }
+</style>
+<script type="text/javascript">
+
+    function loaddata() {
+        showloading();
+        reqdata = new Object();
+        reqdata.url = 'app';
+        reqdata.req = 'list';
+        reqdata.post_type = 'product';
+        reqdata.search = searchAttrAll();
+        controler(reqdata, function (_json) {
+            console.log(_json);
+            $("#newslist").tmpl(_json).appendTo('.container > ul');
+            $(".container > ul img.lazy").lazyload({
+                effect: "fadeIn"
+
+            });
+            page = parseInt(_json.search.page);
+            pagelen = parseInt(_json.search.pagelen);
+            dcount = parseInt(_json.search.dcount);
+            if (dcount < page * pagelen) {
+                searchattr("over", 1)
+            } else {
+                page = 1 + page;
+                searchattr("page", page)
+                scrollpage(); //加载更对功能
+            }
+        }, function () {
+
+        })
+    }
+
+    loaddata();
+
+    function ctrl_frm_product() {
+        $("body").on("tap click", ".container li", function () {
+            api.openWin({
+                name: 'newsdetail',
+                url: 'newsdetail.html?post_id=' + $(this).attr("post_id") + "&theme=apicloud",
+                pageParam: {name: 'coverFlowtest'}
+                 ,delay:200,
+                reload:true,
+            });
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        })
+    }
+</script>
+<script type="text/javascript" src="footer.js"></script>
+</body>
+</html>
+
+
+

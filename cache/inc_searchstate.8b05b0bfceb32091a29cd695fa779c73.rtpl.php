@@ -1,0 +1,60 @@
+<?php if(!class_exists('raintpl')){exit;}?><div class="searchstate" page="1" cate="-1" text="" over="0">
+    <div class="loading">
+        正在加载中……
+    </div>
+    <div class="emptydata">
+        没有了 :)
+    </div>
+</div>
+<style type="text/css">
+    .searchstate{
+        text-align: center;
+        margin: 10px auto;
+    }
+    .searchstate>div{
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    function initsearchstate() {
+        $obj = $(".searchstate");
+        $obj.attr("page", 1);
+        $obj.attr("cate", -1);
+        $obj.attr("text", "");
+        $obj.attr("over", "0"); //是否已经结束
+    }
+    function showloading() {
+        $(".searchstate >div ").hide();
+        $(".searchstate >div.loading ").show();
+    }
+    function showempty() {
+        $(".searchstate >div ").hide();
+        $(".searchstate >div.emptydata ").show();
+    }
+    function searchattr(key, value) {
+        $obj = $(".searchstate");
+        if (typeof (value) != "undefined") {
+            $obj.attr(key, value);
+            if (key == "over" && value == 1) {
+                showempty();
+            }
+        } else {
+            return  $obj.attr(key);
+        }
+    }
+    /**
+     * 返回搜索的数据
+     * @returns {String}
+     */
+    function searchAttrAll() {
+        var allattr = $(".searchstate").get(0).attributes;
+        var search = "";
+        for (i = 0; i < allattr.length; i++) {
+            o = allattr.item(i);
+            if (o.nodeName != 'class') {
+                search += "search[" + o.nodeName + "]=" + encodeURIComponent(o.nodeValue) + "&";
+            }
+        }
+        return search;
+    }
+</script>

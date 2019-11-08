@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>AUI快速完成布局</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <style type="text/css">
+        #classify {
+            color: #ffffff !important;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="aui-content">
+        <div class="aui-grid aui-bg-info">
+            <div class="aui-row" id="classify">
+                <div class="aui-col-xs-3" tapmode onclick="insertObject()">
+                    <div class="aui-badge">新</div>
+                    <i class="aui-iconfont aui-icon-pencil"></i>
+                    <div class="aui-grid-label">提交</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="api.closeWin();">
+                    <i class="aui-iconfont aui-icon-home"></i>
+                    <div class="aui-grid-label">返回</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-header">带有输入框</li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        条码编号
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input id="BARCODE_CONTENT" type="text">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        物料编码
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input id="MATERIAL_CODE" type="text">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        物料名称
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input id="MATERIAL_NAME" type="text">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        图号
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input id="COLOR_NO" type="text">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        派工单号
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input id="WORK_NO" type="text">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        生产批号
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input id="BATCH_NO" type="text" value="111">
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        Select
+                    </div>
+                    <div class="aui-list-item-input">
+                        <select>
+                            <option>Option1</option>
+                            <option>Option2</option>
+                            <option>Option3</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        备注
+                    </div>
+                    <div class="aui-list-item-input">
+                        <textarea placeholder="Textarea"></textarea>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+                    <div class="aui-btn aui-btn-info aui-margin-r-5">提交</div>
+                    <div class="aui-btn aui-btn-danger aui-margin-l-5">取消</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+    //alert(scph);
+    apiready = function() {
+        api.parseTapmode();
+    }
+
+    function insertObject() {
+        //var scph=document.getElementById('scph');
+        //var tmbh=document.getElementById('tmbh');
+        var barcode = $api.byId('BARCODE_CONTENT');
+        //var material_id=$api.byId('MATERIAL_ID_');
+        var material_name = $api.byId('MATERIAL_NAME');
+        var material_code = $api.byId('MATERIAL_CODE');
+        var colorNo = $api.byId('COLOR_NO');
+        var batchNo = $api.byId('BATCH_NO');
+        var date = new Date();
+        var tool='convert_array';
+        //break;
+        //var
+        api.ajax({
+            url: 'http://192.168.1.207/yhzz/updateBarcode.php',
+            method: 'post',
+            cache: 'false',
+            timeout: 30,
+            dataType: JSON,
+            data: {
+                values: {
+                  BARCODE_CONTENT_:barcode.value,
+                  tools:'WareInScan',
+                  STATUS_:'已入库扫描'
+                }
+            }
+        }, function(ret, err) {
+            //alert(tmbh.value);
+            alert(JSON.stringify(ret));
+            if (ret) {
+                if (ret.status == 0) {
+                    api.alert({
+                        msg: ret.msg
+                    });
+                    return;
+                }else{
+                  alert(JSON.stringify(ret));
+                }
+            } else {
+              api.alert({
+                  msg: ('错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode)
+              });
+            }
+        });
+    }
+
+    function ConvertDate(date){
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+          month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
+    }
+</script>
+
+</html>

@@ -1,0 +1,51 @@
+
+/**
+设置页面的区块
+*/
+body {font-size: 12px;}
+#wrap{
+  /*    height: 100%;     */
+}
+.wrap{
+
+}
+#top{    
+ 
+}
+
+#header{    
+
+}
+
+#logo{
+  width: 240px;
+}
+
+.logo{
+  float: right;
+}
+#nav{
+
+}
+
+#container{
+  display: block;
+  margin: 5px auto;
+  overflow: auto;
+}
+
+#sidebar{
+  width: 200px;
+  float: left;
+  height: auto;
+}
+#content{     
+  float: left;
+
+  height: auto;
+}
+
+#footer{
+
+}
+

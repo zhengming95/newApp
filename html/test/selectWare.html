@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>文档</title>
+    <!--<script type="text/javascript" src="../common/js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../common/js/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../common/js/easyui/locale/easyui-lang-zh_CN.js" ></script>
+    <link href="../common/js/easyui/themes/default/easyui.css" type="text/css">
+    <link href="../common/js/easyui/themes/icon.css" type="text/css">-->
+    <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-router/2.7.0/vue-router.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../aui2/css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../aui2/css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../aui2/css/aui-pull-refresh.css" />
+    <style type="text/css">
+        #classify {
+            color: #ffffff !important;
+        }
+    </style>
+</head>
+
+<body>
+  <section class="aui-content">
+      <div class="aui-grid aui-bg-info">
+          <div class="aui-row" id="classify">
+              <div class="aui-col-xs-3" tapmode onclick="goto('addObject')">
+                  <i class="aui-iconfont aui-icon-plus"></i>
+                  <div class="aui-grid-label">新增</div>
+              </div>
+              <div class="aui-col-xs-3" tapmode onclick="api.closeWin();">
+                  <i class="aui-iconfont aui-icon-home"></i>
+                  <div class="aui-grid-label">返回</div>
+              </div>
+          </div>
+      </div>
+  </section>
+    <section class="aui-refresh-content">
+        <div class="aui-content">
+            <div id="demo">
+
+                <div class="aui-card-list" v-for="s in material">
+                    <div class="aui-card-list-header">
+                        条码编号:{{s.BARCODE_CONTENT_}}
+                    </div>
+                    <div class="aui-card-list-content-padded">
+                      <!--<ul class="aui-list aui-collapse aui-border">
+                      <div class="aui-collapse-item">
+                          <li class="aui-list-item aui-collapse-header" tapmode>
+                              <div class="aui-list-item-inner">
+                                  <div class="aui-list-item-title">{{s.WARE_ID_}}</div>
+                                  <div class="aui-list-item-right">
+                                      <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                                  </div>
+                              </div>
+                          </li>
+                          <div class="aui-collapse-content">
+                              <li class="aui-list-item">
+                                  <div class="aui-list-item-inner">
+                                      <div class="aui-list-item-title">{{s.WARE_NAME_}}</div>
+                                  </div>
+                              </li>
+                              <li class="aui-list-item">
+                                  <div class="aui-list-item-inner">
+                                      <div class="aui-list-item-title">{{s.ksrq}}</div>
+                                  </div>
+                              </li>
+                          </div>
+                      </div>
+                    </ul>-->
+                      <!--<ul class="aui-list aui-list-in">
+                            <li class="aui-list-header">
+                                条码编号:{{s.BARCODE_CONTENT_}}
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-title">
+                                    物料编号:
+                                </div>
+                                <div class="aui-list-item-inner">
+                                    {{s.MATREIAL_ID_}}
+                                </div>
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-inner">
+                                    生产批号:{{s.BATCHNO_}}
+                                </div>
+
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-inner">
+                                    出入情况:{{s.STATUS_}}
+                                </div>
+
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-inner">
+                                    创建时间:{{s.ksrq}}
+                                </div>
+
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-inner">
+                                    仓库:{{s.WARE_NAME_}} /备注:{{s.REFERENCE_4_}}
+                                </div>
+
+                            </li>
+                        </ul>-->
+                          <ul class="aui-list aui-media-list">
+                            <li class="aui-list-item aui-list-item-middle">
+                                <div class="aui-media-list-item-inner">
+                                  <!--<div class="aui-list-item-media" style="width: 3rem;">
+                                        <img src="../../image/demo5.png" class="aui-img-round">
+                                    </div>-->
+                                    <div class="aui-list-item-inner aui-list-item-arrow">
+                                        <div class="aui-list-item-text">
+                                            <div class="aui-list-item-title aui-font-size-14">创建人:{{s.CREATE_USER_}}</div>
+                                            <div class="aui-list-item-title aui-font-size-14">创建时间:{{s.ksrq}}</div>
+
+                                        </div>
+                                        <div class="aui-list-item-text">
+                                            <div class="aui-list-item-title aui-font-size-14">入库部门:{{s.IN_DEPT}}</div>
+                                            <div class="aui-list-item-title aui-font-size-14">备注:{{s.REMARK_}}</div>
+                                        </div>
+                                        <div class="aui-list-item-text">
+                                            仓库:{{s.WARE_ID_}}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                    <div class="aui-card-list-footer">
+
+                    </div>
+                </div>
+
+                <div class="page-div-style" id="page">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" v-show="isShowPrevious"><a class="page-link" v-on:click="previous">Previous</a>
+                            </li>
+                            <li class="page-item" v-for="item in pageCounts" v-on:click="pageClick" v-bind:class="{active : item.isActive}">
+                                <a class="page-link">{{item.pages}}</a>
+
+                                <li class="page-item">
+                                    <a class="page-link" v-show="isShowNext" v-on:click="next">Next</a>
+                                </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--<section class="aui-content-padded">-->
+        <ul class="aui-list aui-collapse aui-border">
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">参数说明</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content">
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-title">Item1</div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-title">Item2</div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+          </ul>
+        <!--</section>-->
+    <script src="../../script/api.js"></script>
+    <script src="../../aui2/script/aui-pull-refresh.js"></script>
+    <script type="text/javascript" src="../../script/aui-collapse.js"></script>
+
+    <script type="text/javascript">
+        apiready = function() {
+            api.ajax({
+                url: 'http://yuanhui.free.idcfengye.com/yhzz/test.php',
+                method: 'post',
+                cache: 'false',
+                timeout: 30,
+                dataType: JSON,
+            }, function(ret, err) {
+
+                if (ret) {
+                    var a = eval(ret[0]);
+                    //alert(a.STATUS_);
+                    new Vue({
+                        el: '#demo',
+                        data: {
+                            material: ret,
+                            message: 'Hello Vue.js!'
+                        }
+                    })
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+            api.addEventListener({
+                name: 'viewdisappear'
+            }, function() {
+                api.closeWin();
+            });
+            api.addEventListener({
+                name: 'funOpenTool'
+            }, function(ret, err) {
+
+            });
+        }
+        var collapse = new auiCollapse({
+            autoHide: false //是否自动隐藏已经展开的容器
+        });
+        var v = new Vue({
+            el: '#page',
+            data: {
+              pageCounts: [],
+              curPage: 1,
+              start: 1,
+              end: 5,
+              total: 0,
+              pageCount: 5,
+              pages: 0,
+              isShowPrevious: false,
+              isShowNext: false,
+            },
+            methods: {
+                next() {
+                    v.curPage++;
+                    var param = {
+                        "pageCount": v.pageCount,
+                        "curPage": v.curPage,
+                        "total": v.total
+                    }
+                    sendPost(param);
+                },
+                previous() {
+                    v.curPage--;
+                    var param = {
+                        "pageCount": v.pageCount,
+                        "curPage": v.curPage,
+                        "total": v.total
+                    }
+                    sendPost(param);
+                },
+                pageClick(event) {
+                    //
+                    v.curPage = event.target.innerHTML;
+                    var param = {
+                        "pageCount": v.pageCount,
+                        "curPage": v.curPage,
+                        "total": v.total
+                    }
+                    sendPost(param);
+                    console.log(event.target.innerHTML);
+                }
+            }
+        })
+
+        var pullRefresh = new auiPullToRefresh({
+            container: document.querySelector('.aui-refresh-content'),
+            triggerDistance: 100
+        }, function(ret) {
+            if (ret.status == "success") {
+                setTimeout(function() {
+                    var wrap = document.getElementById("demo")
+                    var lis = wrap.querySelectorAll('.aui-card-list');
+                    //var i = lis.length;
+                    /*var html= '<ul class="aui-list aui-collapse aui-border">'+
+                             '<div class="aui-collapse-item">'+
+                            '<li class="aui-list-item aui-collapse-header" tapmode>'+
+                              '<div class="aui-list-item-inner">'+
+                                 '<div class="aui-list-item-title">123</div>'+
+                                    '<div class="aui-list-item-right">'+
+                                        '<i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</li>'+
+                            '<div class="aui-collapse-content">'+
+                            '<li class="aui-list-item">'+
+                                            '<div class="aui-list-item-inner">'+
+                                                '<div class="aui-list-item-title">'+(i)+'</div>'+
+                                            '</div>'+
+                                      '</li>'+
+                                      '<li class="aui-list-item">'+
+                                          '<div class="aui-list-item-inner">'+
+                                            '<div class="aui-list-item-inner">'+
+                                                '<div class="aui-list-item-title">'+(i)+'</div>'+
+                                            '</div>'+
+                                        '</li>'+
+                                '</div>'+
+                              '</div>'+
+                        '</ul>';*/
+
+                    for (var i = lis.length, length = i + 10; i < length; i++) {
+                        var html = '<div class="aui-card-list">' +
+                            '<div class="aui-card-list-header">' +
+                            '条码编号:' + (i + 1) + '' +
+                            '</div>' +
+                            '<div class="aui-card-list-content-padded">' +
+                            '内容区域，卡片列表布局样式可以实现APP中常见的各类样式' +
+                            '</div>' +
+                            '<div class="aui-card-list-footer">' +
+                            '底部区域' +
+                            '</div>' +
+                            '</div>';
+                            wrap.insertAdjacentHTML('afterbegin', html);
+                    }
+
+                    pullRefresh.cancelLoading(); //刷新成功后调用此方法隐藏
+                }, 1500)
+            }
+        })
+    </script>
+    <script>
+    function goto(name) {
+        window.location.href = './test/'+name + '.html';
+    }
+    function funOpenTool(tag) {
+      //var title=$api.text('新增');
+      //alert(title);
+        api.openWin({
+            name: 'addObject',
+            url: './test/addObject.html'
+        });
+    }
+    </script>
+
+</body>
+
+</html>

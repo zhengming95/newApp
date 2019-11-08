@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>登录界面</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="aui-content">
+<div class="aui-btn aui-btn-info"><span class="aui-iconfont aui-icon-edit"></span>图标按钮</div>
+
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        Text
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="Name">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        Password
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="password" placeholder="Password">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        Number
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="number" placeholder="Number">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        Radio
+                    </div>
+                    <div class="aui-list-item-input">
+                        <label><input class="aui-radio" type="radio" name="demo1" checked> 选项一</label>
+                        <label><input class="aui-radio" type="radio" name="demo1"> 选项二</label>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        Select
+                    </div>
+                    <div class="aui-list-item-input">
+                        <select>
+                            <option>Option1</option>
+                            <option>Option2</option>
+                            <option>Option3</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        Switch
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="checkbox" class="aui-switch" checked>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        Range
+                    </div>
+                    <div class="aui-list-item-input">
+                        <div class="aui-range">
+                            <input type="range" class="aui-range" value="30" max="100" min="1" step="1" id="range" />
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        Textarea
+                    </div>
+                    <div class="aui-list-item-input">
+                        <textarea placeholder="Textarea"></textarea>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+                    <div class="aui-btn aui-btn-info aui-margin-r-5">提交</div>
+                    <div class="aui-btn aui-btn-danger aui-margin-l-5">取消</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <template>
+  <div class="scan">
+    <Index></Index>
+    <div id="bcid">
+    </div>
+    <footer>
+      <button class="scancode" @click="startRecognize1" style="display:inlineblock;width:200px;height:50px,boder:none;light-height:50px;text-align:ceneter;font-size:18px;">
+        1.扫码开始
+      </button>
+    </footer>
+</template>
+    <script>
+        // 创建扫描控件
+        startRecognize1() {
+                document.getElementById('bcid').style.display = 'block';
+                document.getElementsByClassName('scanCode')[0].style.display = 'none';
+                let that = this;
+                if (!window.plus) return;
+                scan = new plus.barcode.Barcode('bcid');
+                scan.onmarked = onmarked;
+                setTimeout(function() {
+                    that.startScan1();
+                }, 100)
+
+                function onmarked(type, result, file) {
+                    switch (type) {
+                        case plus.barcode.QR:
+                            type = 'QR';
+                            break;
+                        case plus.barcode.EAN13:
+                            type = 'EAN13';
+                            break;
+                        case plus.barcode.EAN8:
+                            type = 'EAN8';
+                            break;
+                        default:
+                            type = '其它' + type;
+                            break;
+                    }
+                    result = result.replace(/\n/g, '');
+                    that.codeUrl = result;
+                    alert(that.codeUrl);
+                    if (that.codeUrl) {
+                        that.cancelScan1();
+                        that.closeScan1();
+                    }
+                }
+            },
+            //开始扫描
+            startScan1() {
+                if (!window.plus) return;
+                scan.start();
+            },
+            //关闭扫描
+            cancelScan1() {
+                if (!window.plus) return;
+                scan.cancel();
+            },
+            //关闭条码识别控件
+            closeScan1() {
+                document.getElementById('bcid').style.display = 'none';
+                document.getElementsByClassName('scanCode')[0].style.display = 'block';
+                if (!window.plus) return;
+                scan.close();
+            },
+            function showPersonInfo() {
+                console.log('1');
+                api.showProgress(); //显示加载进度框
+                //使用api.ajax请求数据，具体使用方法和参数请看官方文档，这里使用get方法演示
+                api.ajax({
+                    url: 'http://192.168.1.5:81/get.php', //如果地址访问不到会请求出错，请填写自己的接口地址
+                    method: 'get',
+                    cache: 'false',
+                    timeout: 30,
+                    dataTpye: 'json',
+                }, function(ret, err) {
+                    api.hideProgress(); //隐藏加载进度框
+                    if (ret) {
+                        for (var i = 0; i < ret.length; i++) {
+                            var html = '<br>' + 'ID：' + ret[i].id + '<br>' + '姓名：' + ret[i].name + '<br>' + '性别:' + ret[i].sex + '<br>' + '年龄' + ret[i].age;
+                            console.log('1');
+                            document.write(html);
+                        }
+                    } else {
+                        api.alert({
+                            msg: ('错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode)
+                        });
+                    }
+                });
+            }
+    </script>
+</body>
+
+</html>

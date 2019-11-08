@@ -1,0 +1,221 @@
+<?php if(!class_exists('raintpl')){exit;}?><!DOCTYPE html>
+<html>
+    <head>
+        <title>引导页面 修改config.xml "xpjc_start.html"</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,maximum-scale=1, user-scalable=no">
+        <meta name="MobileOptimized" content="320" />
+        <meta name="format-detection" content="telephone=no" />
+        <script src="http://192.168.99.182:39010/themes/apicloud/script/api.js"></script>
+        <style type="text/css">
+            html, body, #wrap {
+                margin: 0;
+                border: 0;
+                padding: 0;
+                font-style: normal;
+                color: rgb(50,50,50);
+                -webkit-touch-callout: none;
+                -webkit-text-size-adjust: none;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                -webkit-user-select: none;
+                background-color: #fff;
+            }
+            #header {
+                background-color: rgb(45, 174, 191);
+                text-align: center;
+            }
+            .header {
+                height: 45px;
+                line-height: 45px;
+                font-size: 16px;
+                text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.25);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+                font-weight: bold;
+            }
+            .container {
+                padding: 10px;
+            }
+            ul, li {
+                margin: 0px;
+                padding: 0px;
+            }
+            li {
+                padding: 5px 0px;
+                position: relative;
+                display: block;
+                text-align: center;
+            }
+            li input {
+                margin: 0px auto;
+                padding: 0px;
+                border: 0px;
+                padding: 8px 0px;
+                font-size: 14px;
+                border-radius: 5px;
+                border: solid 1px #cdcdcd;
+                display: block;
+                position: relative;
+                width: 98%;
+            }
+            .button {
+                color: #464646;
+                text-decoration: none;
+                text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.25);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+                position: relative;
+                cursor: pointer;
+            }
+            .reload_xpjc_button {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                z-index: 5000;
+                background: #90be44;
+                left: 60px;
+                top: 350px;
+            }
+            .href_xpjc_button {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                z-index: 5000;
+                background: #cdcdcd;
+                left: 120px;
+                top: 350px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="wrap">
+            <div id="header" class="wrap">
+                <div class="header">
+                    调试器
+                </div>
+            </div>
+            <div id="container" class="wrap">
+                <div class="container">
+                    <form action="" onsubmit="return submiturl();">
+                        <ul>
+                            <li>
+                                <input type="text" id="url" placeholder="输入网址: http://"/>
+                            </li>
+                            <li>
+                                <input type="submit" class="button" value="开始调试" />
+                            </li>
+                        </ul>
+                    </form>
+                    <ul>
+                        <li>
+                            <input type="button"  class="button" value="扫描调试" onclick="scanner()"/>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <input type="button"  class="button" value="清除缓存" onclick="clearCache()"/>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            //如果是ios调整头部
+
+            function GetRandomNum(Min, Max) {
+                var Range = Max - Min;
+                var Rand = Math.random();
+                return (Min + Math.round(Rand * Range));
+            }
+
+            var initappready = false;
+            apiready = function () {
+                $api.fixStatusBar(document.getElementById("header"));
+                initappready = true;
+                console.log("initappready");
+                if (typeof (localStorage.getItem('historyurl')) != "undefined") {
+                    document.getElementById("url").value = localStorage.getItem('historyurl');
+                }
+            }
+            /**
+             *
+             * @param {type} _url 需要打开的url
+             * @returns {Boolean}
+             */
+            function xpjcOpenWin(_url) {
+                if (initappready) {
+                    if (typeof (_url) != "undefined" && _url && _url != '') {
+                        if (_url == 'xpjc') {
+                            api.alert({
+                                msg: "作者qq:2488602922"
+                            })
+                        }
+
+                        if (_url.indexOf("http") == -1) {
+                            _url = "http://" + _url;
+                        }
+                        localStorage.setItem('historyurl', _url);
+                        api.openWin({
+                            name: 'xpjc_root_win' + GetRandomNum(1, 10000),
+                            url: _url,
+                            pageParam: {
+                                name: 'xpjc_root_win' + GetRandomNum(1, 10000)
+                            }
+                        });
+                    }
+                }
+                return false;
+            }
+
+            /**
+             * url 搜索
+             * @returns {Boolean}
+             */
+            function submiturl() {
+                return xpjcOpenWin(document.getElementById("url").value);
+            }
+
+            /**
+             * 扫码跳转
+             * @returns {Boolean}
+             */
+            function scanner() {
+                if (initappready) {
+                    var obj = api.require('scanner');
+                    if (!obj) {
+                        api.alert({
+                            msg: "请添加二维码模块"
+                        })
+                    }
+                    obj.open(function (ret, err) {
+                        if (ret.msg != "") {
+                            return xpjcOpenWin(ret.msg);
+                        }
+                    });
+                }
+                return false;
+            }
+
+            /**
+             * 清空缓存
+             * @returns {Boolean}
+             */
+            function clearCache() {
+                if (initappready) {
+                    sessionStorage.clear();
+                    localStorage.clear();
+                    $api.clearStorage();
+                    api.clearCache();
+                    api.toast({
+                        msg: '清除成功',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+                return false;
+            }
+        </script>
+    </body>
+</html>
+
+

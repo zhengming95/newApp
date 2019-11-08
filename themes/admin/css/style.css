@@ -1,0 +1,552 @@
+@charset "utf-8";
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+    border:0;
+    font-size:12px;
+    margin:0;
+    padding:0;
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+
+body {
+    line-height:1.5;
+
+}
+
+ol,ul {
+    list-style:none;
+}
+
+blockquote,q {
+    quotes:none;
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+    content:none;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+    empty-cells: hide; 
+    caption-side: top; 
+}
+
+
+a {
+    text-decoration:none;
+}
+
+a img {
+    border:none;
+}
+
+body,body.ui-widget-content {
+    font-size:12px;
+    height:100%;
+    border:0 none;
+    font-family:宋体, Arial,Lucida Grande,Lucida Sans,sans-serif;
+    margin:0 auto;
+    display: none;
+}
+
+body,* {
+    font-family:宋体, Arial,Lucida Grande,Lucida Sans,sans-serif;
+}
+
+#header {
+    height:60px;
+    overflow:hidden;
+}
+
+.header {
+    display:block;
+    float:left;
+    width:100%;
+}
+
+.header a {
+    position:relative;
+}
+
+.header h1 {
+    display:block;
+    float:left;
+    font-size:20px;
+    width:50%;
+    /*margin:18px;*/
+    margin-left: 10px;
+    font-family: 微软雅黑;
+}
+
+#wrap {
+    width:1100px;
+    margin:0 auto;
+}
+
+#container {
+    clear:both;
+    display:block;
+    padding:0;
+}
+
+#sidebar {
+    position:absolute;
+    top:62px;
+    width:235px;
+    z-index:100;
+    border-radius:6px 6px 6px 6px;
+    margin:0;
+    padding:0;
+}
+#sidebar .content{
+    padding:1px;
+}
+#tabs.ui-tabs{
+    padding:1px;
+}
+#sidebar .content .ui-accordion .ui-accordion-content{
+    padding:1em 1.5em;
+}
+#tabs .list-content{
+
+    border-radius: 5px;
+    border:1px solid #CDCDCD;
+    border-top:none;
+}
+.ui-widget-content a{
+    color:#1E90FF;
+    font-weight:bold;
+}
+
+
+.list-content table.grid-24-23{
+    width:99.99%;
+}
+
+.sidebar li {
+    text-align:center;
+    cursor:pointer;
+    width:98%;
+    padding:0;
+}
+
+#content {
+    position:relative;
+    padding-left:243px;
+    margin:0;
+}
+
+.content {
+    margin:0;
+    padding:5px;
+}
+
+#footer {
+    width:100%;
+    clear:both;
+}
+
+#footer .footer {
+    clear:both;
+    text-align:center;
+    padding:5px;
+}
+
+fieldset {
+    border:1px solid;
+    padding-left:20px;
+}
+
+fieldset legend {
+    padding:2px;
+}
+
+.sl-table {
+    float:left;
+    text-align:left;
+    width:100%;
+}
+
+.sl-table .title{
+    width:60px;
+}
+
+
+.sl-table li,.sl-table td {
+    border-bottom:1px none #FFF;
+    clear:both;
+    height:auto;
+    line-height:20px;
+    list-style-type:none;
+    margin-bottom:0;
+    overflow:auto;
+    padding:6px;
+}
+
+ul.sl-table label {
+    display:block;
+    float:left;
+    margin-right:10px;
+    text-align:left;
+    width:150px;
+}
+
+.sl-table li input,textarea,select {
+    /*margin-left:6px;*/
+}
+
+.sl-table li,.sl-table tr{
+    /*  border-bottom:1px solid #FFF; */
+
+}
+
+.sl-table li input,.sl-table tr input{
+    border: 1px solid #CDCDCD;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.sl-table li textarea ,.sl-table tr textarea {
+    border: 1px solid #CDCDCD;
+    border-radius: 5px;
+    padding: 5px;
+}
+.sl-table li select  ,.sl-table tr select  {
+    border: 1px solid #CDCDCD;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.sl-table li input,textarea,select {
+    margin-left:0px;
+}
+
+.sl-table li,.sl-table tr{
+    /*  border-bottom:1px solid #FFF; */
+}
+
+.sl-table li:hover,.sl-table tr:hover{
+
+}
+
+#sl-address span {
+    margin:0;
+    padding:6px;
+}
+
+#sl-address span.action {
+    display:block;
+    float:left;
+    width:30px;
+}
+
+#sl-address span.type {
+    display:block;
+    float:left;
+    width:100px;
+}
+
+
+.right {
+    float:right;
+}
+
+#change-pwd-wrap {
+    position:absolute;
+    top:0;
+    left:0;
+    background-color:#464646;
+    height:100%;
+    width:100%;
+    z-index:1000;
+    display:none;
+    margin:0 auto;
+    padding:0;
+}
+
+#change-pwd-wrap table {
+    width:100%;
+    text-align:center;
+    top:200px;
+    position:relative;
+}
+
+#change-pwd-wrap table tr td .title {
+    text-align:center;
+    color:red;
+    font-size:14px;
+    font-weight:700;
+    display:block;
+    padding:3px;
+}
+
+#change-pwd-wrap table tr td {
+    text-align:center;
+    padding-bottom:3px;
+}
+
+#change-pwd-wrap table tr td input {
+    text-align:center;
+    padding:3px;
+}
+
+#tabs li .ui-icon-close {
+    float:left;
+    cursor:pointer;
+    margin:.4em .2em 0 0;
+}
+
+#add_tab {
+    cursor:pointer;
+}
+
+
+.hide{
+    display:none;
+}
+
+.clear{
+    clear:both;
+    height:0px;
+    overflow:hidden;
+}
+
+
+label.error {
+    display:block;
+    color:red;
+    padding-left:20px;
+}
+
+input.error {
+    display:block;
+    float:left;
+    color:red;
+}
+
+
+/***提示框******/
+#alert_msg_area{
+    position:fixed;
+    top:5px;
+    display: block;
+    margin:0 auto;
+    padding:0 auto;
+    width:100%;
+    z-index:1000;
+    text-align:center;
+
+}
+#alert_msg_area .alert_msg_area{	
+    margin:0 auto;	
+    text-align:center;
+    display: block;
+    padding-top:20px;
+    position: relative;
+}
+#alert_msg_area .alert_msg_content{
+    font-size:14px;
+    margin:0 auto;	
+    text-align:center;
+    display: inline;
+    position: relative;
+    padding:18px 40px;
+}
+
+/**
+上传按钮
+*/
+span.spanButtonPlaceholder{
+    display:block;
+    float:left;
+    padding:0px;
+    margin:0px;
+    height:28px;
+}
+
+
+span.spanButtonPlaceholder object{
+    padding:0px;
+    margin:0px;
+    margin-top:2px;
+}
+
+.divFileProgressContainer{
+    height:3px;
+    clear:both;
+}
+/*搜索------------------------------------------*/
+.search-area{
+    width: 100%;
+    border-bottom: 1px solid #FFFFFF;
+    padding-bottom: 10px;
+}
+.search-area table td{
+    padding: 5px;
+}
+.center{
+    text-align: center;
+}
+
+/*--------------------------------------*/
+#content  table tr.title{
+    height: 28px;
+    text-align: center;
+    background-color:#CCCCCC;
+}
+
+#content  table tr.color{
+    background-color:#DDDDDD;
+}
+#content  table tr.title th{
+
+}
+
+
+
+#content {
+    font-size: 14px;   
+    font-weight: bold;
+    color:#1E90FF;  
+    line-height: 1.4;
+}
+#content  tr a:hover{     
+    color:#0000CD;
+    text-decoration: underline;
+
+}
+
+
+
+
+/*导航------------------------------------------*/
+.nav {
+    font-size: 10px;
+}
+#dialog_del{
+    display:none;
+}
+
+
+/**搜索区域*****************/
+.search_area li input[type=text]{
+    width: 100px;
+    padding: 5px;
+    border: #cdcdcd solid 1px;
+    border-radius: 5px;
+}
+
+.search_area li select{
+    max_width: 150px;
+    padding: 5px;
+    border: #cdcdcd solid 1px;
+    border-radius: 5px;  
+
+}
+.search_area li select option{ 
+    margin:5px auto;
+    font-size:14px;
+    font-weight:bold;
+}
+.sl-table li select option, .sl-table tr select option{ 
+    margin:5px auto;
+    font-size:14px;
+    font-weight:bold;
+}
+
+div.page{
+    margin: 5px;
+    padding-top: 20px;
+}
+div.page
+.ui-button-text{
+    padding: 0.4px 5px;
+}
+
+body, body.ui-widget-content
+.list-content tr.list-table-title {
+    height: 35px; 
+}
+body, body.ui-widget-content
+.list-content tr{
+    height: 35px; 
+}
+
+
+#color_sel.hide,.hide{
+    display: none;
+}
+
+
+.selall,.list_sel_all.title {
+    cursor: pointer;
+
+}
+
+
+
+.tocopypost,.tomenupost,.todelpost,.toadmin{
+    display: none;
+}  
+
+
+
+
+.search_area{
+    margin:10px;
+}
+.search_area li{
+    display:inline;
+}
+.search_area li.hide{
+    display:none;
+}
+
+
+
+#color_sel{
+    display: block;
+    float:right;
+    padding-right:30px;
+    padding-top:30px;
+}
+#color_sel ul{
+    padding-left:285px;
+}
+#color_sel ul li {
+    display:inline;
+    margin: 5px;
+}
+
+.toadmin, .list_sel_all{
+    display: none; 
+}    
+
+
+.parameters_hide{
+    display: none;
+}
+
+.ui-widget-content {
+    color: #666666;
+}
+.sl-table input.ui-button[type=submit]{
+    font-size: 14px;
+    padding: 5px 15px;
+}
+
+span.parameters-memo{
+    line-height: 30px;
+    color: #999;
+    padding-left: 5px;
+    font-size: 12px;
+    display: inline-block;
+    vertical-align: top;
+}
+.ke-container.ke-container-default{
+    display: inline-block;
+}

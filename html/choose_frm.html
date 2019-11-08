@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <title>选择朋友</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" href="../css/message_style.css">
+    <style>
+        .s_mapul {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            max-height: 350px;
+            overflow: scroll;
+            background: #fff;
+            overflow-y: auto;
+        }
+
+        .s_mapul li {
+            border-bottom: 1px solid #ededed;
+            padding: 0.3rem 5%;
+            position: relative;
+        }
+
+        .s_mapul li h2 {
+            font-size: 0.8rem;
+        }
+
+        .s_mapul li h2 img {
+            position: absolute;
+            right: 5%;
+            height: 1rem;
+        }
+
+        .s_mapul li p {
+            font-size: 0.6rem;
+            color: #b0b0b0;
+            margin-top: 0.2rem;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/message_common.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/jquery.min.js"></script>
+<script type="text/javascript" src="../script/convertPinyin.js"></script>
+<script>
+    var user;
+    var UIListCheck;
+    apiready = function () {
+        fix_status_bar();
+        user = $api.getStorage('user');
+
+        // 监听页面关闭
+        api.addEventListener({
+            name: 'confirmChooseEvent'
+        }, function (ret, err) {
+            getSelectedSync();
+        });
+
+        api.ajax({
+            url: BASE_URL_ACTION+'/RongCloud/GetFriends',
+            method: 'post',
+            data: {
+                values: {
+                    customerId: user.person_id,
+                }
+            }
+        }, function (json, err) {
+            if (json.result) {
+                dealFriendsData(json.info,function(contacts) {
+                    UIListCheck = api.require('UIListCheck');
+                    UIListCheck.open({
+                        rect: {
+                            x: 0,
+                            y: 22,
+                            w: api.frameWidth,
+                            h: api.frameHeight - 22
+                        },
+                        contacts: contacts,
+                        fixedOn: 'message_choose_friends_frm'
+                    }, function (ret) {
+                        if (ret) {
+                        }
+                    });
+                });
+            } else {
+                toast('获取好友数据失败');
+            }
+        });
+
+
+
+    }
+
+    function dealFriendsData(data,callback) {
+        var contacts = [];
+        for (var i=0;i<data.length;i++) {
+            var item = {};
+            item.employee_id = data[i].Id;
+            item.remark = data[i].NickName;
+            item.position = "";
+            item.phonetic = convertPinyin(data[i].NickName);
+            contacts[i] = item;
+        }
+        if (typeof callback == 'function') {
+            callback(contacts);
+        }
+    }
+
+    function getSelectedSync() {
+        var ret = UIListCheck.getSelectedSync();
+        var contacts = ret.contacts;
+        if (contacts.length == 0) {
+            toast('请选择好友');
+            return;
+        }
+
+        var values = {
+            systemName : 'yunlutong',
+            customerId : user.person_id
+        }
+
+        for(var i = 0;i<contacts.length;i++) {
+            var key='contactIds['+i+']';
+            values[key]= contacts[i].employee_id;
+        }
+
+        api.ajax({
+            url : BASE_URL_ACTION+'/RongCloud/AddGroup',
+            method : 'post',
+            data : {
+                values : values
+            }
+        }, function(json, err) {
+            if (json.result) {
+                toast('创建成功');
+
+                setTimeout(openChatPage('',json.groupid,0,'群聊','GROUP','index',''),500);
+
+                // 本来想在这里处理的，发现不管用
+            } else {
+                toast('创建失败');
+            }
+
+        });
+
+
+    }
+
+
+
+
+</script>
+
+</body>
+</html>

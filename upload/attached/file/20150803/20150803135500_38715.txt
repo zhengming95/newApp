@@ -1,0 +1,102 @@
+1.中国化工仪器网http://www.chem17.com/
+2.仪器信息网 http://www.instrument.com.cn/
+3.中国教育装备采购网http://www.caigou.com.cn/
+4.现代实验室装备网http://www.lab168.cn
+5.中国化学仪器网http://www.chemshow.cn/
+6. 现代实验室装备网http://www.eduienet.com/xdsys/
+7.实验室社区http://bbs.labscn.com/
+8.药物分析网http://www.yaofen.com/
+9. 亚洲科学仪器网http://www.asiaasi.com/
+10. 分析测试百科网http://www.antpedia.com/
+11.生物商场http://shop.51atgc.com/index.php
+12. 中国色谱网 http://www.sepu.net/
+13. 中国生物器材网http://www.bio-equip.com/
+14.高教仪器商情网http://www.gaojiao17.com/
+15.生技网 http://www.biogo.net/
+16. 中国仪器仪表信息网 http://www.instrnet.com/
+
+http://www.bootcss.com/p/bootstrap-form-builder/
+
+VS2010 旗舰版可用Key：YCFHQ9DWCYDKV88T2TMHG7BHP
+
+
+
+
+黄涛朋友 唐 2015/7/17 11:41:57
+guchengsuye  
+
+黄涛朋友 唐 2015/7/17 11:42:04
+guchengxs
+
+孤狼 2015/7/17 11:42:14
+
+
+13739225713 陈    安徽 合肥
+18755199290 萤迹  安徽 合肥
+18632803718
+
+
+
+唐小强
+
+
+<script src="http://192.168.199.182:38899/xpjcadmin/reload.php" type="text/javascript" charset="utf-8"></script>
+
+
+
+http://kf.qq.com/cgi-bin/loginTitle?rand
+
+
+<script type="text/javascript">
+ $(function(){
+
+   
+    $.ajax({
+   type:'get',//jquey是不支持post方式跨域的
+     async:false,
+       url:"http://kf.qq.com/cgi-bin/loginTitle?rand.xml",//跨域请求的URL
+      dataType:'jsonp',
+     //传递给请求处理程序，用以获得jsonp回调函数名的参数名(默认为:callback)
+      jsonp:'jsoncallback',
+       //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+          jsonpCallback:"success_jsonpCallback",
+     //成功获取跨域服务器上的json数据后,会动态执行这个callback函数
+      success:function(result){
+             //document.write(result);
+			 console.log(esult);
+
+			 //jQuery('#noticecon').html(result.img_url);
+           }
+		   
+      });
+       
+
+    
+});
+</script>
+
+
+
+亲爱的孤狼
+    你的好友"︶ㄣ小糊涂仙╮(641826102)"通过会员好友克隆功能快速添加好友，
+将你添加到了TA的新号码(42601500)的好友列表中。
+
+
+
+
+佳誉养生堂
+域名转移
+
+
+http://www.jikexueyuan.com/path/python/
+
+
+
+http://wex5.com/cn/wex5/
+
+
+黄涛修改信息
+
+
+选择目录 文件上传
+

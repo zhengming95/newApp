@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>登录界面</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js">
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../script/api.js"></script>
+
+    <style>
+        body {
+            background-color: #eee;
+        }
+
+        .logopos {
+            padding-top: 50px;
+        }
+
+        img#yh {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="system-login" style="height: 812px;">
+
+        <div class="head">
+        </div>
+        <style type="text/css">
+
+        </style>
+
+        <div class="login-panel">
+            <div class="logopos">
+                <img id="yh" src="../image/logo/yhzd.png">
+            </div>
+            <form id="form1" class="well" style="width: 30em; margin: auto; margin-top: 50px;">
+                <div class=" input-group input-group-md">
+                    <span class="input-group-addon" id="sizing-addon1"><i
+                   class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                 </span>
+                    <input id="userName" type="text" class="form-control" placeholder="用户名" aria-describedby="sizing-addon1" />
+                </div>
+                <br />
+                <div class="input-group input-group-md">
+                    <span class="input-group-addon" id="sizing-addon1"><i
+                   class="glyphicon glyphicon-lock"></i></span> <input type="password" id="password" class="form-control" placeholder="密码" aria-describedby="sizing-addon1" />
+                </div>
+                <br />
+
+                <button type="button" class="btn btn-success btn-block" style="background-color: #5b6be8;
+    	border-color: #5b6be8;" onclick="login()">登录</button>
+                <button type="button" class="btn btn-success btn-block" style="background-color: #5b6be8;
+    border-color: #5b6be8;" onclick="showPersonInfo()">显示</button>
+                <a class="btn btn-sm btn-white btn-block" style="text-align: right;" th:href="@{register}" href="register.html"><h6>还没有账户？前往注册</h6></a>
+            </form>
+        </div>
+
+        <script>
+            function login() {
+
+                var username = document.getElementById("userName");
+                var pass = document.getElementById("password");
+
+                if (username.value == "") {
+
+                    alert("请输入用户名");
+
+                } else if (pass.value == "") {
+
+                    alert("请输入密码");
+
+                } else if (username.value == "admin" && pass.value == "123456") {
+
+                    window.location.href = "frame1.html";
+
+                } else {
+
+                    alert("请输入正确的用户名和密码！")
+
+                }
+            }
+
+            function showPersonInfo() {
+                console.log('1');
+
+
+
+                //document.write('Hello');
+                apiready = function() {
+                    api.showProgress(); //显示加载进度框
+                    //使用api.ajax请求数据，具体使用方法和参数请看官方文档，这里使用get方法演示
+                    api.ajax({
+                        url: 'http://192.168.1.5:81/get.php', //如果地址访问不到会请求出错，请填写自己的接口地址
+                        method: 'get',
+                        cache: 'false',
+                        timeout: 30,
+                        dataTpye: 'json',
+                    }, function(ret, err) {
+                        api.hideProgress(); //隐藏加载进度框
+                        if (ret) {
+                            for (var i = 0; i < ret.length; i++) {
+                                var html = '<br>' + 'ID：' + ret[i].id + '<br>' + '姓名：' + ret[i].name + '<br>' + '性别:' + ret[i].sex + '<br>' + '年龄' + ret[i].age;
+                                console.log('1');
+                                document.write(html);
+                            }
+                        } else {
+                            api.alert({
+                                msg: ('错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode)
+                            });
+                        }
+                    });
+                }
+            }
+            /*$("#form1").on("click", ".btn", function(e) {
+                var radioValue = $('input:radio[name="kind"]:checked').val();
+                var formData = $("#form1").serialize();
+
+                $.ajax({
+                    url: "/login",
+                    type: "post",
+                    data: {
+                        "userName": $("#userName").val(),
+                        "password": $("#password").val()
+                    },
+                    dataType: "json",
+                    success: function(result) {
+                        if ("true" == result.flag) {
+                            window.location.href = "http://www.baidu.com";
+                        } else {
+                            alert("用户名或者密码不对");
+                        }
+                    }
+                })
+            })*/
+        </script>
+</body>
+
+</html>

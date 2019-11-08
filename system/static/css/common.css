@@ -1,0 +1,56 @@
+
+
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { 
+  margin: 0px;
+  padding: 0px;
+  border: 0px none;
+  outline: 0px none; 
+
+}
+:focus {outline: 0px none;}
+
+body {line-height: 1;color: black;background: none repeat scroll 0% 0% white;}
+
+table {border-collapse: separate;border-spacing: 0px;}
+caption, th, td { text-align: left; font-weight: normal;}
+
+a:link{  text-decoration:none;}/*未访问的链接*/
+a:visited{text-decoration:none;}/*已访问的链接*/
+a:hover{text-decoration:none;}/*移动到链接上*/
+a:active{ text-decoration: none;}/*选定的链接*/
+
+
+ol, ul {list-style: none outside none;}
+ul li{ list-style-type:none; padding-left: 20px;}
+a{outline:none;}
+a:focus{outline:thin dotted;}
+a:hover{outline:none;}
+a:active{outline:none;}
+
+#wrap{width:100%; margin:0 auto;padding:0px; height: auto;}
+.wrap{width: 960px;margin:0 auto;padding:0px;}
+
+.left{float: left;}
+.right{float: right;}
+.center{ text-align: center;margin: 0px auto;}
+.cb, .clear { clear: both;height:0px;overflow:hidden;}
+.hide{display: none;}
+/*内容区域*/
+.content{position: relative;padding: 5px;margin: 0px;}
+
+.error{
+  background-color: #F33;
+  padding: 5px;
+  margin: 0px;
+  color:#FFFFFF;
+  border: 2px dotted #999;
+  font-size:14px;
+}
+
+
+.items{
+  padding-top:3px;
+  padding-bottom:3px;
+  overflow:auto;
+}

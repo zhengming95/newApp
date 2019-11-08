@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>文档</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" href="../tabPanel/tabPanel.css">
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-router/2.7.0/vue-router.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <style type="text/css">
+        #classify {
+            color: #ffffff !important;
+        }
+    </style>
+    <style>
+        .page-div-style {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+    <style>
+       [v-cloak] {
+          display: none;
+      }
+</style>
+</head>
+
+<body>
+    <section class="aui-content">
+        <div class="aui-grid aui-bg-info">
+            <div class="aui-row" id="classify">
+                <div class="aui-col-xs-3">
+                    <i class="aui-iconfont aui-icon-plus"></i>
+                    <div class="aui-grid-label" tapmode onclick=goto( 'selectWare')>新增</div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <i class="aui-iconfont aui-icon-minus"></i>
+                    <div class="aui-grid-label">删除</div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <div class="aui-badge">新</div>
+                    <i class="aui-iconfont aui-icon-pencil"></i>
+                    <div class="aui-grid-label" tapmode onclick="saveMain()">提交</div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <i class="aui-iconfont aui-icon-home"></i>
+                    <div class="aui-grid-label" onclick="api.closeWin();">返回</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="app">
+        <ul class="aui-list aui-form-list">
+            <!--<li class="aui-list-header">带有图标的表单</li>!-->
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        单据编号
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input id="docNo" type="text" placeholder="自动生成（不必填）">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        入库时间
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input id="Date" type="text" value="">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        仓库
+                    </div>
+                    <div class="aui-list-item-input">
+                        <select align="center" id="ware">
+                  <option v-for="item in ware" v-bind:value="item.ID_">{{item.NAME_}}</option>
+
+                </select>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        入库部门
+                    </div>
+                    <div id="Date" class="aui-list-item-input">
+                        <input id="dept" type="text" v-bind:value="1">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        创建人
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input id="UserName" type="text" placeholder="Name">
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+                    <div class="aui-btn aui-btn-info aui-margin-r-5" tapmode onclick="addDoc()">保存</div>
+                    <div class="aui-btn aui-btn-danger aui-margin-l-5" onclick="" tapmode>取消</div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        条码编号
+                    </div>
+                    <div class="aui-list-item-input">
+                        <textarea id="tmbh" placeholder="扫描获取"></textarea>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+
+    </div>
+    <!--<div id="vue" v-cloak>
+        {{ message }}
+      <button onclick="vm.getData();" tapmode>Button One</button>
+      <textarea rows="15" id="description"></textarea>
+      <span id="wordsCounting">500字</span>
+    </div>-->
+    <ul class="aui-list aui-collapse aui-border">
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    条码编号
+                    <div id="code1" class="aui-list-item-title"></div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content">
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        物料编号
+                        <div id="wlbm1" class="aui-list-item-title">空</div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        物料名称
+                        <div id="wlmc1" class="aui-list-item-title">空</div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        图号
+                        <div id="th1" class="aui-list-item-title">空</div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        派工单号
+                        <div id="pgdh1" class="aui-list-item-title">空</div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        生产批号
+                        <div id="scph1" class="aui-list-item-title">空</div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        入库情况
+                        <div id="status1" class="aui-list-item-title">空</div>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </ul>
+
+    <!--  <div class="aui-content aui-margin-b-15" v-for="s in material">
+            <ul class="aui-list aui-list-in">
+                <li class="aui-list-header">
+                    条码编号:{{s.BARCODE_CONTENT_}}
+                </li>
+                <li class="aui-list-item">
+                  <div class="aui-list-item-title">
+                    物料编号:
+                  </div>
+                  <div class="aui-list-item-inner">
+                    {{s.MATREIAL_ID_}}
+                  </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        生产批号:{{s.BATCHNO_}}
+                    </div>
+
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        出入情况:{{s.STATUS_}}
+                    </div>
+
+                </li>
+            </ul>
+                <ul class="aui-list aui-media-list">
+                    <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="width: 3rem;">
+                                <img src="../image/demo5.png" class="aui-img-round">
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">创建人:{{s.CREATE_USER_}}</div>
+                                    <div class="aui-list-item-right">创建时间:{{s.CREATE_TIME_}}</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    仓库:{{s.WARE_NAME_}} /备注:{{s.REFERENCE_4_}}
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                </ul>
+                <div class="page-div-style" id="page">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" v-show="isShowPrevious"><a class="page-link" v-on:click="previous">Previous</a>
+                            </li>
+                            <li class="page-item" v-for="item in pageCounts" v-on:click="pageClick" v-bind:class="{active : item.isActive}">
+                                <a class="page-link">{{item.pages}}</a>
+
+                                <li class="page-item">
+                                    <a class="page-link" v-show="isShowNext" v-on:click="next">Next</a>
+                                </li>
+                        </ul>
+                    </nav>
+
+
+                </div>
+        </div>-->
+
+
+
+    <div class="aui-card-list">
+        <div class="aui-card-list-header">
+            <div><i class="aui-iconfont aui-icon-my aui-text-danger"></i><span class="aui-text-danger">最近仓库列表</span></div>
+            <i class="aui-iconfont aui-icon-more"></i>
+        </div>
+        <div class="aui-tab">
+            <div class="aui-tab-item tapmode aui-active">条码编号</div>
+            <div class="aui-tab-item tapmode">物料编码</div>
+            <div class="aui-tab-item tapmode">物料名称</div>
+            <div class="aui-tab-item tapmode">生产批号</div>
+        </div>
+    </div>
+    <!--<div class="wrap" id="wrap">
+                <ul class="tabClick">
+                    <li class="active">Tab1</li>
+                    <li>Tab2</li>
+                    <li>Tab3</li>
+                    <li>Tab4</li>
+                </ul>
+                <div class="lineBorder">
+                    <div class="lineDiv">
+                    </div>
+                </div>
+                <div class="tabCon">
+                    <div class="tabBox">
+                        <div class="tabList">
+
+                        </div>
+                        <div class="tabList">
+                            Tab2<br />
+                            Tab2
+                        </div>
+                        <div class="tabList">
+                            Tab3<br />
+                            Tab3
+                        </div>
+                        <div class="tabList">
+                            Tab4<br />
+                            Tab4
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+    <!--<div id="app">
+            <div class="aui-bar aui-bar-btn aui-bar-btn-sm aui-bar-btn-full" v-for="s in material">
+                <div class="aui-bar-btn-item" style="width:20%;">{{s.BARCODE_CONTENT_}}</div>
+                <div class="aui-bar-btn-item" style="width:20%;">{{s.MATREIAL_ID_}}</div>
+                <div class="aui-bar-btn-item" style="width:20%;">{{s.MATREIAL_CODE_}}</div>
+                <div class="aui-bar-btn-item" style="width:20%;">{{s.STATUS_}}</div>
+                <div class="aui-bar-btn-item" style="width:20%;">{{s.BATCHNO_}}</div>
+
+            </div>
+            <p>{{ message }}</p>
+
+        </div>
+
+
+        <ul class="aui-list aui-list-in">
+
+            <li class="aui-list-item">
+
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">Item1</div>
+                </div>
+            </li>
+            <div class="aui-tab">
+                <div class="aui-tab-item tapmode aui-active" data-item-order="0">Item1</div>
+                <div class="aui-tab-item tapmode" data-item-order="1">
+                    <div></div>Item2</div>
+                <div class="aui-tab-item tapmode">Item3</div>
+                <div class="aui-tab-item tapmode">Item4</div>
+            </div>
+        </ul>
+
+
+
+
+        <div class="aui-card-list-content">
+            <ul class="aui-list aui-media-list">
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media" style="width: 3rem;">
+                            <img src="../image/demo5.png" class="aui-img-round">
+                        </div>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            <div class="aui-list-item-text">
+                                <div class="aui-list-item-title aui-font-size-14">AUI</div>
+                                <div class="aui-list-item-right">08:00</div>
+                            </div>
+                            <div class="aui-list-item-text">
+                                www.auicss.com
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media" style="width: 3rem;">
+                            <img src="../image/liulangnan.png" class="aui-img-round">
+                        </div>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            流浪男
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="aui-card-list-footer aui-text-center">
+            查看更多
+        </div>
+
+
+    </div>
+-->
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/aui-collapse.js"></script>
+    <script src="../tabPanel/tabPanel.js"></script>
+    <script>
+        var mainid;
+        apiready = function() {
+
+            var uname = $api.getStorage('username');
+            var date = new Date();
+            var seperator1 = "-";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate;
+            api.ajax({
+                url: 'http://yuanhui.free.idcfengye.com/yhzz/selectWare.php',
+                method: 'post',
+                cache: 'false',
+                timeout: 30,
+                dataType: JSON,
+            }, function(ret, err) {
+                if (ret) {
+                    //var a = eval(ret[0]);
+                    //alert(a.NAME_);
+                    new Vue({
+                        el: '#app',
+                        data: {
+                            ware: ret,
+                            message: 'Hello Vue.js!',
+                            date: currentdate,
+                            uname: uname,
+                        }
+                    });
+                    document.getElementById('Date').value = currentdate;
+                    document.getElementById('UserName').value = uname;
+                    $('#tmbh').bind('input propertychange', function(event) {
+                       console.log($("#tmbh").val());
+                       selectByCode();
+                        //$('#description').html($(this).val().length + ' characters');
+                    });
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+
+        }
+        Date.prototype.Format = function(fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+
+        function gettingTime(time) {
+            var date = new Date();
+            date.setTime(time);
+            return date.Format("yyyy-MM-dd hh:mm:ss");
+        }
+        var collapse = new auiCollapse({
+            autoHide: false //是否自动隐藏已经展开的容器
+        });
+
+        function getDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate;
+            document.getElementById('Date').value = currentdate;
+        }
+
+        function goto(name) {
+            window.location.href = './test/' + name + '.html';
+        }
+
+        function addDoc() {
+            var utime = gettingTime(new Date());
+            var uname = document.getElementById('UserName');
+            var udept = document.getElementById('dept');
+            var mdate=$api.byId('Date');
+            //alert(mdate.value);
+            var uware = $api.byId('ware');
+            var index = uware.selectedIndex;
+
+            var wareid = uware.options[index].value;
+            //alert(wareid);
+            //apiready= function() {
+            api.ajax({
+                url: 'http://yuanhui.free.idcfengye.com/yhzz/main.php',
+                method: 'post',
+                timeout: 30,
+                dataType: JSON,
+                returnAll: false,
+                data: {
+                    values: {
+                        CREATE_USER_: uname.value,
+                        CREATE_TIME_: utime,
+                        MAKE_DATE_:mdate.value,
+                        WARE_ID_: wareid,
+                        DEPT_NO_: udept.value,
+                        tools:'WareInScan'
+                    }
+                }
+            }, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    var a = eval(ret[0]);
+                    alert(a.ID_);
+                    mainid=a.ID_;
+                    $api.val($api.byId('docNo'), a.ID_);
+                    //alert('sss');
+                    //document.getElementById('Date').value = currentdate;
+                    //document.getElementById('UserName').value = uname;
+                } else {
+                    //alert(JSON.stringify(err));
+                    api.alert({
+                        msg: ('错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode)
+                    });
+                }
+            });
+
+            //};
+        }
+
+        function selectByCode() {
+            var code = $api.byId("tmbh");
+            var utime = gettingTime(new Date());
+            var uname = document.getElementById('UserName');
+            if($api.byId('docNo').value==""){
+              alert('请点击保存按钮生成单据编号！');
+              return;
+            }
+            api.ajax({
+                url: 'http://yuanhui.free.idcfengye.com/yhzz/selectMaterial.php',
+                method: 'post',
+                timeout: 30,
+                dataType: JSON,
+                returnAll: false,
+                data: {
+                    values: {
+                        code: code.value,
+                        MAIN_ID_:mainid,
+                        CREATE_USER_: uname.value,
+                        CREATE_TIME_: utime
+                    }
+                }
+            }, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    var a = eval(ret[0]);
+                    alert(a.ID_);
+                    $api.text($api.byId('code1'), a.BARCODE_CONTENT_);
+                    $api.text($api.byId('wlbm1'), a.CODE_);
+                    $api.text($api.byId('wlmc1'), a.NAME_);
+                    $api.text($api.byId('pgdh1'), a.ID_);
+                    $api.text($api.byId('scph1'), a.BATCHNO_);
+                    $api.text($api.byId('th1'), a.COLOR_);
+                    $api.text($api.byId('status1'), a.STATUS_);
+                } else {
+                    //alert(JSON.stringify(err));
+                    api.alert({
+                        msg: ('错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode)
+                    });
+                }
+            });
+        }
+
+        function keypress(){
+　　var description = document.getElementById("description").value;
+　　var remainNum = 500 - description.length;
+　　if(remainNum < 0){
+　　　　remainNum = 0;
+　　　　vm.wishContent = description.substring(0,500);
+　　　　alert('最多只能输入500个字符哟~');
+　　}
+　　document.getElementById("wordsCounting").innerText = remainNum + "字";
+    }
+
+    </script>
+    <script>
+ /*var vm;
+
+apiready = function () {
+  vm = new Vue({
+    el: '#vue',
+    data: function() {
+       return {
+         message: 'Hello world!'
+       };
+     },
+     methods: {
+       getData: function(name) {
+         setTimeout(function() {
+           vm.message = vm.message + name + '吃了吗？';
+         }, 3000);
+       },
+     }
+  });
+};*/
+
+        /*var vd = new Vue({
+                    el: '#date',
+                    data: {
+                        date: new Date()
+                    },
+                    methods: {
+                        next() {
+                            v.curPage++;
+                            var param = {
+                                "pageCount": v.pageCount,
+                                "curPage": v.curPage,
+                                "total": v.total
+                            }
+                            sendPost(param);
+                        }
+
+                    }
+                })
+                var v = new Vue({
+                    el: '#page',
+                    data: {
+                        pageCounts: [],
+                        curPage: 1,
+                        start: 1,
+                        end: 5,
+                        total: 20,
+                        pageCount: 5,
+                        pages: 5,
+                        isShowPrevious: true,
+                        isShowNext: true,
+                    },
+                    methods: {
+                        next() {
+                            v.curPage++;
+                            var param = {
+                                "pageCount": v.pageCount,
+                                "curPage": v.curPage,
+                                "total": v.total
+                            }
+                            sendPost(param);
+                        },
+                        previous() {
+                            v.curPage--;
+                            var param = {
+                                "pageCount": v.pageCount,
+                                "curPage": v.curPage,
+                                "total": v.total
+                            }
+                            sendPost(param);
+                        },
+                        pageClick(event) {
+                            //
+                            v.curPage = event.target.innerHTML;
+                            var param = {
+                                "pageCount": v.pageCount,
+                                "curPage": v.curPage,
+                                "total": v.total
+                            }
+                            sendPost(param);
+                            console.log(event.target.innerHTML);
+                        }
+                    }
+                })
+                var vm = new Vue({
+                    el: '#example',
+                    data: {
+                        items: [],
+                    },
+                    methods: {
+                        reviewClick(event) {
+                            //获取id
+
+                        },
+                        editorClick(event) {
+                            //获取id
+                            //console.log(event.target.value);
+                            var userIframe = window.parent.document.getElementById('userIframe');
+                            userIframe.src = "user_info.html?id=" + event.target.value;
+                            //window.location.href = "user_info.html?id=" + event.target.value;
+                        },
+                        deleteClick(event) {
+                            Vue.http.get('/deleteUserById/' + event.target.value).then(function(res) {
+                                console.log(JSON.parse(res.bodyText));
+                                var param = {
+                                    "pageCount": v.pageCount,
+                                    "curPage": v.curPage,
+                                    "total": v.total
+                                }
+                                sendPost(param);
+                            }, function(res) {
+
+                            })
+                            console.log("删除" + event.target.value);
+                        },
+                    }
+                })
+                var param = {
+                    "pageCount": v.pageCount,
+                    "curPage": v.curPage,
+                    "total": v.total
+                }
+
+                sendPost(param);
+
+                function sendPost(param) {
+                    Vue.http.post('http://192.168.0.143/findBarcode.php', param).then(function(res) {
+                            //请求成功
+                            var result = JSON.parse(res.bodyText);
+                            var data = result[0];
+                            var sum = result[1];
+                            v.total = Math.ceil((sum.total / sum.pageCount));
+                            if (v.total < 5)
+                                v.end = v.total;
+                            //将分页的数据清空为0
+                            v.pageCounts.length = 0;
+                            //判断上一页、下一页是否显示
+                            if (sum.curPage == 1 && v.total == 1) {
+                                v.isShowPrevious = false;
+                                v.isShowNext = false;
+                            } else if (sum.curPage == 1 && v.total != 1 && v.total != 0) {
+                                v.isShowPrevious = false;
+                                v.isShowNext = true;
+                            } else if (sum.curPage == v.total) {
+                                v.isShowPrevious = true;
+                                v.isShowNext = false;
+                            } else {
+                                v.isShowPrevious = true;
+                                v.isShowNext = true;
+                            }
+                            if (v.curPage == v.end && v.end < v.total) {
+                                v.start++;
+                                v.end++;
+                            } else if (v.curPage == v.start && v.start > 1) {
+                                v.start--;
+                                v.end--;
+                            }
+                            //获取显示的椰树
+                            for (var i = v.start; i <= v.end; i++) {
+                                v.pageCounts.push({
+                                    pages: i,
+                                    isActive: i == v.curPage ? true : false,
+                                })
+                            }
+
+                            //获取服务端传递过来的数据，
+                            vm.items.length = 0;
+                            for (var i = 0; i < data.length; i++) {
+                                //触发数组更新
+                                vm.items.push({
+                                    num: (parseInt([i]) + 1),
+                                    username: data[i].username,
+                                    phone: data[i].phone,
+                                    email: data[i].email,
+                                    avatar: data[i].avatar,
+                                    id: data[i].id,
+                                })
+                            }
+
+
+                        },
+
+                        function(res) {
+                            //请求失败
+                        }
+                    );
+                }*/
+
+    </script>
+
+</body>
+
+</html>

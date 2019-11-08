@@ -1,0 +1,9 @@
+<a href="/index.php/page">单独页面</a>
+<a href="/index.php/page-detail/{id}">单独页面详细</a>
+<a href="/index.php/news">企业新闻</a>
+<a href="/index.php/news-detail/{id}">企业新闻详细</a>
+<a href="/index.php/product">产品</a>
+<a href="/index.php/product-detail/{id}">产品详细</a>
+<a href="/index.php/case">案例</a>
+<a href="/index.php/case-detail/{id}">案例详细</a>
+<a href="/index.php/site_setting">site_setting</a>

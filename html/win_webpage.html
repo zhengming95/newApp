@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <style>
+        header {
+            background-color: #FCFCFC;
+            line-height: 42px;
+            height: 42px;
+            position: relative;
+        }
+
+        header b {
+            width: 42px;
+            height: 100%;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            background: url() no-repeat center;
+            background-size: 70% auto;
+        }
+
+        header b.ic-back {
+            background-image: url(../image/ic-back.png);
+        }
+
+        header b.ic-check {
+            background-image: url(../image/ic-check.png);
+            float: right;
+        }
+
+        header .title {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap" class="flex-wrap flex-vertical">
+        <header class="border-b">
+            <b tapmode="hover" onclick="api.closeWin();" class="ic-back"></b>
+            <div class="title"></div>
+            <b tapmode="hover" onclick="funActionSheet();" class="ic-check"></b>
+        </header>
+        <div id="main" class="flex-con">
+            <div class="detail_content_box" v-if='"type==detail"'>
+                <div class="detail_top"></div>
+                <div class="detail_content_meun">
+                    <div class="scroll_list_div" v-for="item in type_list">
+                        <p class="yuan" :class="get.money_type == item.id ? 'current_selected' : ''" tapmode v-on:click="get.type='';get.money_type = item.id;fnGetUserInfo()" v-text="item.name"></p>
+                    </div>
+                </div>
+                <div class="ok_all">
+                    <!-- 查看全部选择 -->
+                    <p class="all">
+                        <em></em>
+                        <select name="" id="" v-model="get.type">
+                        <option value="" class="select">查询全部</option>
+                        <option value="1">入账记录</option>
+                        <option value="2">出账记录</option>
+                    </select>
+                    </p>
+                    <p class="all"><span class="select" v-on:click="fnGetUserInfo()">确定查找</span></p>
+                </div>
+                <div class="detail_bottom_content" v-if="is_meun >= 0" ref="Box" @scroll="Scroll">
+                    <div class="content_top" v-if="userInfo != []" v-for="item in userInfo">
+                        <div class="left">
+                            <p class="sum">数量</p>
+                            <p class="sum">流动说明</p>
+                            <p class="sum">记录时间</p>
+                        </div>
+                        <div class="right">
+                            <p class="sum" v-text="item.num + '枚'"></p>
+                            <p class="text" v-text="item.text"></p>
+                            <p class="sum" v-text="item.add_time"></p>
+                        </div>
+                    </div>
+                    <div v-if="userInfo == []" class="null">当前没数据</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="cTime">{{text}}</div>
+
+</body>
+
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/vue-router/2.7.0/vue-router.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.min.js"></script>
+<script type="text/javascript">
+    var vm;
+    /*apiready = function() {
+      var app = new Vue({
+    el: '#myApp',
+    data: {
+      // 双向绑定的数据类容
+      text: "apiCloud双向绑定"
+    },
+    created: function () {
+      // vue页面初始化执行
+      this.text = "成功引入vue"
+    },
+    methods: {
+		  let val = this.text;
+          api.openWin({
+    		 name: 'frame1',
+    		 url: './frame1.html',
+       		 pageParam: {
+        		//  需要传递的值
+            	name: 'test',
+           		nextPageVal: val
+       	 	}
+ 		});
+	}
+  // apiCloud 初始页面执行函数
+  showTime();
+})*/
+
+apiready = function() {
+        vm = new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        is_meun: 0,
+                        type: api.pageParam.type,
+                        userInfo: [],
+                        get: {
+                            money_type: 1,
+                            type: '',
+                            status: 1,
+                            page: 1,
+                            pagesize: 8,
+                        },
+                        type_list: [],
+                    }
+                },
+                methods: {
+                    fnGetUserInfo() {
+                        var _this = this;
+                        // 将数据清空
+                        _this.userInfo = [];
+                        // 将page重新设为1
+                        _this.get.page = 1;
+                        _post('test/getFundingInformation', 'post', _this.get, function(res, err) {
+                            if (res.code == -1) {
+                                api.toast({
+                                    msg: res.err,
+                                    duration: 2000,
+                                    location: 'bottom'
+                                })
+                            } else {
+                                _this.userInfo = res.data;
+                            }
+                        })
+                    },
+                    get_type() {
+                        var _this = this;
+                        _post('test/detail_list', 'post', {}, function(res, err) {
+                            if (res.code == -1) {
+                                api.toast({
+                                    msg: res.err,
+                                    duration: 2000,
+                                    location: 'bottom'
+                                });
+                            } else {
+                                _this.type_list = res.data;
+                            }
+                        })
+                    },
+                    Scroll: function() {
+                        //滚动盒子
+                        try {
+                            chatBoxHeight = parseInt(this.$refs.Box.scrollHeight);
+                            chatBox = parseInt(this.$refs.Box.scrollTop);
+                            if (chatBoxHeight - chatBox == this.$refs.Box.clientHeight) {
+                                var _this = this;
+                                // 滚动到盒子底部
+                                vm.get.page++;
+                                _post('test/getFundingInformation', 'post', vm.get, function(res, err) {
+                                    if (res.code == -1) {
+                                        api.toast({
+                                            msg: res.err,
+                                            duration: 2000,
+                                            location: 'bottom'
+                                        });
+                                    } else {
+                                        // 在上一个数组中拼接一个新数组(类似下拉刷新,加载更多)
+                                        _this.userInfo = _this.userInfo.concat(res.data);
+                                    }
+                                })
+                            }
+                        } catch (error) {}
+                    },
+                },
+                created() {
+                    var _this = this;
+                    var header = $api.dom('header');
+                    var headerH = $api.fixStatusBar(header);
+                    $api.fixStatusBar(header);
+                    // console.log(headerH);
+                    // 实例化滚动插件
+                    echo.init();
+                    _this.fnGetUserInfo()
+                    _this.get_type();
+                    document.addEventListener('scroll', this.Scroll);
+                }
+            })
+        }
+        /*apiready = function(){
+            $api.fixStatusBar( $api.dom('header') );
+            $api.dom('.title').innerHTML = api.pageParam.name;
+            api.openFrame({
+                name: 'frm_mine',
+                url: './frm_mine.html',
+                rect: {
+                    x: 0,
+                    y: $api.dom('header').offsetHeight,
+                    w: api.winWidth,
+                    h: $api.dom('#main').offsetHeight
+                },
+                bounces : true,
+                pageParam: {
+                    name: api.pageParam.name
+               }
+            });
+        };
+
+        function funActionSheet(){
+            api.actionSheet({
+                title: '底部弹出框',
+                cancelTitle: '取消',
+                destructiveTitle: '红色警告按钮',
+                buttons: ['按钮1','按钮2','按钮3']
+            },function(ret,err){
+                // api.alert({
+                //     msg: '你刚点击了'+ret.buttonIndex
+                // });
+            });
+        }*/
+        // 当前时间
+  function showTime() {
+    let date = new Date();
+    let dateWra = document.getElementsByClassName('cTime')[0];
+    dateWra.innerHTML = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+  }
+
+</script>

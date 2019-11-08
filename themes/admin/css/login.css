@@ -1,0 +1,204 @@
+@charset "utf-8";
+
+body.ui-widget-header {
+    background: url("login_bg.jpg") repeat-x #c8e4f2;
+    color: #000000;
+}
+
+.center{
+    text-align: center;
+}
+
+#corpshow{
+    height:230px;
+}
+#corpshow  .grid-1-1  .grid-3-2{
+    height:230px;
+    display:block;
+    float:left;
+}
+#corpshow .grid-1-1 .grid-3-1{
+    height:230px;
+    float:right;
+}
+
+
+
+.imglist{
+
+}
+.imglist .grid-5-1{
+    float:left;
+    height:210px;
+}
+
+.nimglist .grid-4-1{
+    float:left;
+    height:180px;
+}
+
+.nimglist .grid-8-3,.nimglist .grid-8-2{
+    float:left;
+    height:420px;
+}
+
+
+.nimglist .grid-9-3,.nimglist .grid-9-4,.nimglist .grid-9-2{
+    float:left;
+    height:420px;
+}
+
+
+
+#wrap #footer{	
+    height:300px;
+    background:black;
+    color:white;
+}
+#wrap #footer .wrap{
+    background:black;
+    color:white;
+}
+#wrap #footer  .footer  div.grid-6-1{
+    height:260px;	
+    float:left;
+}
+
+.corpright{
+    font-size:20px;
+}
+.corpright .grid-1-1{
+    padding-top:10px;
+    padding-bottom:10px;
+    float:left;
+}
+
+
+
+#login{
+    margin: 0px auto;
+    margin-top: 160px;
+}
+#login .area .column{
+    height: 38px;
+}
+
+#login .area input{
+
+}
+#login .area .input{
+    width: 200px;
+    text-align: center;
+    padding-top:6px;
+    padding-bottom:6px;
+}
+iframe{
+    background: #DDDDDD;    
+}
+
+ol{
+    list-style: decimal ;
+    margin: 10px; 
+    margin-left: 30px;
+    line-height: 1.5;
+}
+.portlet-content ol li a{
+    color: #464646;
+    font-size: 16px;
+    font-family: "黑体";
+}
+
+.layout-column{ width: 24.6%; float: left; padding-bottom: 100px; }
+.portlet { margin: 0 1em 1em 0; }
+.portlet-header {
+    margin: 0.3em; 
+    padding : 4px; 
+    padding-left: 0.2em; 
+    font-size: 14px;
+
+}
+.portlet-header .ui-icon { float: right; }
+.portlet-content { padding: 0.4em; }
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+
+#mask{
+    background: #464646;
+    width: 100%;
+    height: 1000px;
+    position: absolute;
+    z-index: 99;
+    display: none;
+    margin: 0px;
+    padding: 0px;
+    top:0px;
+    left: 0px;
+}
+#topmenubar{
+    display: none;
+}
+
+#topmenubar ul li {
+    display: inline;
+    margin-left: 5px;
+    padding: 0px;
+    float: left;
+
+}
+#topmenubar li.close {
+    float: right;
+}
+#topmenubar ol{
+    display: none;
+    position: relative;
+    float: none;
+    margin: 0px;
+    padding: 0px;
+}
+#topmenubar li ol li{
+    display: block;
+    list-style: decimal ;
+    float: none;
+    margin: 0px;
+    padding: 0px;
+}
+#topmenubar li ol li .button{
+    width: 100%;
+}
+
+
+#change-pwd-wrap{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #464646;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+    margin: 0px auto;
+    padding: 0px;   
+    display: none;
+}
+
+#change-pwd-wrap table{
+    width: 100%;
+    text-align: center;
+    top:200px;
+    position: relative;
+
+}
+#change-pwd-wrap table  tr  td .title{  
+    text-align: center;
+    padding-bottom: 3px;
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+}
+#change-pwd-wrap table  tr td{  
+    text-align: center;
+    padding-bottom: 3px;
+}
+#change-pwd-wrap table tr td input{  
+    text-align: center;
+    padding: 3px;
+}
